@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://c2uihfuj2afai"]
+
+[ext_resource type="Texture2D" uid="uid://ca6s4vjs17b3a" path="res://resources/ground/texture_08.png" id="1_dpuoj"]
+[ext_resource type="PackedScene" uid="uid://bo5to3cs55ywc" path="res://props/chest/chest.tscn" id="2_ipex1"]
+[ext_resource type="PackedScene" uid="uid://cek63fcdml15h" path="res://characters/Character.tscn" id="3_2svpy"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_m1hn1"]
+albedo_texture = ExtResource("1_dpuoj")
+uv1_triplanar = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_gipwa"]
+size = Vector3(20, 0.2, 20)
+
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_46ktv"]
+data = PackedVector3Array(-10, 0.1, 10, 10, 0.1, 10, -10, -0.1, 10, 10, 0.1, 10, 10, -0.1, 10, -10, -0.1, 10, 10, 0.1, -10, -10, 0.1, -10, 10, -0.1, -10, -10, 0.1, -10, -10, -0.1, -10, 10, -0.1, -10, 10, 0.1, 10, 10, 0.1, -10, 10, -0.1, 10, 10, 0.1, -10, 10, -0.1, -10, 10, -0.1, 10, -10, 0.1, -10, -10, 0.1, 10, -10, -0.1, -10, -10, 0.1, 10, -10, -0.1, 10, -10, -0.1, -10, 10, 0.1, 10, -10, 0.1, 10, 10, 0.1, -10, -10, 0.1, 10, -10, 0.1, -10, 10, 0.1, -10, -10, -0.1, 10, 10, -0.1, 10, -10, -0.1, -10, 10, -0.1, 10, 10, -0.1, -10, -10, -0.1, -10)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_jn3v2"]
+ground_bottom_color = Color(0.385, 0.454, 0.55, 1)
+
+[sub_resource type="Sky" id="Sky_mw4si"]
+sky_material = SubResource("ProceduralSkyMaterial_jn3v2")
+
+[sub_resource type="Environment" id="Environment_exhu8"]
+background_mode = 2
+sky = SubResource("Sky_mw4si")
+
+[node name="demo" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+material_override = SubResource("StandardMaterial3D_m1hn1")
+mesh = SubResource("BoxMesh_gipwa")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="MeshInstance3D"]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="MeshInstance3D/StaticBody3D"]
+shape = SubResource("ConcavePolygonShape3D_46ktv")
+
+[node name="chest" parent="." instance=ExtResource("2_ipex1")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, -3.76578)
+
+[node name="chest2" parent="." instance=ExtResource("2_ipex1")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, -5.0721, 0, -3.80487)
+
+[node name="Character" parent="." instance=ExtResource("3_2svpy")]
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_exhu8")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.246914, -0.790457, -0.560545, 0, -0.578456, 0.815714, -0.969037, 0.201412, 0.142829, 0, 4.17585, 0)

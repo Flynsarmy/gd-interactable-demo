@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://0a54gb13oi2u"]
+
+[ext_resource type="ArrayMesh" uid="uid://75b16vaix6p1" path="res://resources/Modular Village/Wall_Prop_Door_Ornate.obj" id="1_g5bqk"]
+[ext_resource type="Script" path="res://props/doorway/door/door.gd" id="1_ifsub"]
+[ext_resource type="PackedScene" uid="uid://bcant1jf3ssg3" path="res://systems/interaction/Interactable.tscn" id="3_egicb"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_mts3h"]
+size = Vector3(0.182, 1.369, 0.728)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_h1ssr"]
+size = Vector3(0.182, 1.369, 0.728)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_ifsub")
+
+[node name="WallPropDoorOrnate" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -0.382746, 0, -0.355372)
+mesh = ExtResource("1_g5bqk")
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.681791, -0.355515)
+shape = SubResource("BoxShape3D_mts3h")
+
+[node name="Interactable" parent="." instance=ExtResource("3_egicb")]
+
+[node name="CollisionShape3D" parent="Interactable" index="0"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.681791, -0.355515)
+shape = SubResource("BoxShape3D_h1ssr")
+
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
+
+[editable path="Interactable"]

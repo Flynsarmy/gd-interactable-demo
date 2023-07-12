@@ -1,0 +1,44 @@
+[gd_scene load_steps=7 format=3 uid="uid://bo5to3cs55ywc"]
+
+[ext_resource type="PackedScene" uid="uid://bhlk3jlpfm1h0" path="res://props/chest/source/chest.glb" id="1_1hbqm"]
+[ext_resource type="Script" path="res://props/chest/chest.gd" id="2_rmilk"]
+[ext_resource type="Material" uid="uid://bjtqdjip4kg41" path="res://props/chest/outline.tres" id="3_5ewrr"]
+[ext_resource type="PackedScene" uid="uid://bcant1jf3ssg3" path="res://systems/interaction/Interactable.tscn" id="3_iw05p"]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_clxje"]
+size = Vector3(0.614, 0.518, 0.587)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_frebs"]
+size = Vector3(0.614408, 0.517854, 0.586966)
+
+[node name="chest" instance=ExtResource("1_1hbqm")]
+script = ExtResource("2_rmilk")
+highlight_material = ExtResource("3_5ewrr")
+
+[node name="Skeleton3D" parent="Armature" index="0"]
+bones/0/rotation = Quaternion(0, 0, 0, 1)
+bones/1/rotation = Quaternion(0.75707, 7.00948e-07, 8.12244e-07, 0.653334)
+
+[node name="StaticBody3D" type="StaticBody3D" parent="." index="2"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.251476, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D" index="0"]
+shape = SubResource("BoxShape3D_clxje")
+
+[node name="Interactable" parent="." index="3" instance=ExtResource("3_iw05p")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.251476, 0)
+
+[node name="CollisionShape3D" parent="Interactable" index="0"]
+shape = SubResource("BoxShape3D_frebs")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="." index="4"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.298945, 0)
+light_color = Color(1, 0.972549, 0.345098, 1)
+light_energy = 0.0
+omni_range = 1.287
+
+[connection signal="focused" from="Interactable" to="." method="_on_interactable_focused"]
+[connection signal="interacted" from="Interactable" to="." method="_on_interactable_interacted"]
+[connection signal="unfocused" from="Interactable" to="." method="_on_interactable_unfocused"]
+
+[editable path="Interactable"]
